@@ -1,0 +1,63 @@
+{
+  "name": "triangle/web",
+  "description": "Triangle Web - High performance MVC framework",
+  "type": "project",
+  "keywords": [
+    "Triangle"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "role": "Developer",
+      "name": "Ivan Zorin",
+      "email": "creator@localzet.com",
+      "homepage": "https://github.com/localzet"
+    },
+    {
+      "role": "Community",
+      "name": "Localzet Group",
+      "email": "community@localzet.com",
+      "homepage": "https://www.localzet.com"
+    }
+  ],
+  "support": {
+    "email": "support@localzet.com",
+    "source": "https://github.com/Triangle-org/Web"
+  },
+  "require": {
+    "php": "^8.2",
+    "triangle/engine": "^5.5",
+    "illuminate/database": "^11.5",
+    "illuminate/pagination": "^11.5",
+    "illuminate/events": "^11.5",
+    "symfony/var-dumper": "^7.0",
+    "predis/predis": "^2.2",
+    "illuminate/redis": "^11.6",
+    "symfony/cache": "^7.0",
+    "ext-openssl": "*",
+    "localzet/lwt": "^1.2"
+  },
+  "suggest": {
+    "ext-simplexml": "For XML Support",
+    "ext-libxml": "For XML Support"
+  },
+  "autoload": {
+    "psr-4": {
+      "": "./"
+    },
+    "files": [
+      "support/helpers.php"
+    ]
+  },
+  "scripts": {
+    "post-package-install": [
+      "Triangle\\Engine\\Plugin::install"
+    ],
+    "post-package-update": [
+      "Triangle\\Engine\\Plugin::update"
+    ],
+    "pre-package-uninstall": [
+      "Triangle\\Engine\\Plugin::uninstall"
+    ]
+  }
+}
