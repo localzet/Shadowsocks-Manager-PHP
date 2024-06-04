@@ -12,6 +12,9 @@ class GenerateKeys extends Command
     protected static string $defaultName = 'generate:keys';
     protected static string $defaultDescription = 'Генерация ключей шифрования';
 
+    private string $publicKeyPath;
+    private string $privateKeyPath;
+
     /**
      * Конфигурация аргументов команды
      * @return void
@@ -21,7 +24,7 @@ class GenerateKeys extends Command
         $this->addArgument('algorithm', InputArgument::OPTIONAL, 'Алгоритм', 'ec');
         $this->addArgument('private_key_bits', InputArgument::OPTIONAL, 'Для RSA, DSA и DH', 2048);
         $this->addArgument('digest_alg', InputArgument::OPTIONAL, 'Для DSA', 'sha512');
-        $this->addArgument('curve_name', InputArgument::OPTIONAL, 'Для ECDSA', 'prime256v1');
+        $this->addArgument('curve_name', InputArgument::OPTIONAL, 'Для ECDSA', 'sect571k1');
     }
 
     /**
@@ -38,7 +41,7 @@ class GenerateKeys extends Command
         }
 
         $algorithm = $input->getArgument('algorithm');
-        $private_key_bits = $input->getArgument('private_key_bits');
+        $private_key_bits = (int)$input->getArgument('private_key_bits');
         $digest_alg = $input->getArgument('digest_alg');
         $curve_name = $input->getArgument('curve_name');
 
@@ -100,7 +103,29 @@ class GenerateKeys extends Command
             return self::FAILURE;
         }
 
+        // Сохраняем пути к ключам
+        $this->publicKeyPath = "keys/$filename.crt";
+        $this->privateKeyPath = "keys/$filename.key";
+
         $output->writeln("Ключи успешно сгенерированы и сохранены в: $path/$filename.key и $path/$filename.crt");
         return self::SUCCESS;
+    }
+
+    /**
+     * Получение пути к открытому ключу
+     * @return string
+     */
+    public function getPublicKeyPath(): string
+    {
+        return $this->publicKeyPath;
+    }
+
+    /**
+     * Получение пути к закрытому ключу
+     * @return string
+     */
+    public function getPrivateKeyPath(): string
+    {
+        return $this->privateKeyPath;
     }
 }
