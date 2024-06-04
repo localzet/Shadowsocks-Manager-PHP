@@ -56,7 +56,7 @@ class ShadowSocks
         shell_exec('systemctl restart ss-manager.service');
 
         // Создание нового UDP-соединения
-        $this->shadowsocks = new AsyncUdpConnection("udp://$this->address");
+        $this->shadowsocks = new AsyncUdpConnection($this->address);
         $this->shadowsocks->onConnect = [$this, 'onConnect'];
         $this->shadowsocks->onMessage = [$this, 'onMessage'];
         $this->shadowsocks->onError = [$this, 'onError'];

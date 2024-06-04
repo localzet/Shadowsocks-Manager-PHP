@@ -10,13 +10,13 @@
 
 return [
     'ShadowSocks' => [
-        'listen' => 'udp://' . env('MANAGER_ADDRESS', '0.0.0.0:6002'),
+        'listen' => env('MANAGER_LISTEN', 'udp://127.0.0.1:6002'),
         'count' => 1,
         'reloadable' => false,
         'reusePort' => false,
         'handler' => services\ShadowSocks::class,
         'constructor' => [
-            'address' => env('SHADOWSOCKS_ADDRESS','127.0.0.1:6001')
+            'address' => env('SHADOWSOCKS_LISTEN','udp://127.0.0.1:6001')
         ],
     ]
 ];

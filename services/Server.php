@@ -159,7 +159,7 @@ class Server
      */
     private static function sendMessage($message): void
     {
-        $shadowsocks = new AsyncUdpConnection("udp://" . env('SHADOWSOCKS_ADDRESS', '127.0.0.1:6001'));
+        $shadowsocks = new AsyncUdpConnection(env('SHADOWSOCKS_LISTEN', 'udp://127.0.0.1:6001'));
         // ->close() вызовет ->send() из-за текста, а тот вызовет ->connect() из-за ->connected === false
         $shadowsocks->close('list');
 
