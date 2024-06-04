@@ -83,16 +83,7 @@ CONF;
             return self::FAILURE;
         }
 
-        $commands = [
-            'sudo sysctl -p'
-        ];
-        foreach ($commands as $command) {
-            $result = shell_exec($command);
-            if ($result === null) {
-                $output->writeln("Ошибка при выполнении команды: $command");
-                return self::FAILURE;
-            }
-        }
+        shell_exec('sudo sysctl -p');
 
         $output->writeln('Реконфигурация ядра Linux выполнена успешно');
         return self::SUCCESS;

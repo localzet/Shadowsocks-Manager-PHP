@@ -29,7 +29,7 @@ class InitShadowsocks extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        if (trim(shell_exec('which shadowsocks-libev')) == '') {
+        if (!shell_exec('which ss-server')) {
             shell_exec('sudo apt-get install shadowsocks-libev');
         }
 
@@ -53,17 +53,8 @@ CONF;
             return self::FAILURE;
         }
 
-        $commands = [
-            'sudo systemctl enable shadowsocks-libev',
-            'sudo systemctl restart shadowsocks-libev'
-        ];
-        foreach ($commands as $command) {
-            $result = shell_exec($command);
-            if ($result === null) {
-                $output->writeln("Ошибка при выполнении команды: $command");
-                return self::FAILURE;
-            }
-        }
+        shell_exec('sudo systemctl enable shadowsocks-libev');
+        shell_exec('sudo systemctl restart shadowsocks-libev');
 
         $output->writeln('Служба Shadowsocks-libev запущена');
         return self::SUCCESS;

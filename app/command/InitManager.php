@@ -55,18 +55,9 @@ CONF;
             return self::FAILURE;
         }
 
-        $commands = [
-            'sudo systemctl daemon-reload',
-            'sudo systemctl enable shadowsocks-manager',
-            'sudo systemctl restart shadowsocks-manager'
-        ];
-        foreach ($commands as $command) {
-            $result = shell_exec($command);
-            if ($result === null) {
-                $output->writeln("Ошибка при выполнении команды: $command");
-                return self::FAILURE;
-            }
-        }
+        shell_exec('sudo systemctl daemon-reload');
+        shell_exec('sudo systemctl enable shadowsocks-manager');
+        shell_exec('sudo systemctl restart shadowsocks-manager');
 
         $output->writeln('Служба Shadowsocks-manager запущена');
         return self::SUCCESS;
