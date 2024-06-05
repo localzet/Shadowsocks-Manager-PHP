@@ -58,6 +58,7 @@ class GenerateKeys extends Command
                 $res = openssl_pkey_new(array(
                     "private_key_bits" => $private_key_bits,
                     "private_key_type" => OPENSSL_KEYTYPE_RSA,
+                    "config" => runtime_path("conf.d/openssl.cnf"),
                 ));
                 break;
 
@@ -66,6 +67,7 @@ class GenerateKeys extends Command
                     "digest_alg" => $digest_alg,
                     "private_key_bits" => $private_key_bits,
                     "private_key_type" => OPENSSL_KEYTYPE_DSA,
+                    "config" => runtime_path("conf.d/openssl.cnf"),
                 ));
                 break;
 
@@ -73,6 +75,7 @@ class GenerateKeys extends Command
                 $res = openssl_pkey_new(array(
                     "private_key_bits" => $private_key_bits,
                     "private_key_type" => OPENSSL_KEYTYPE_DH,
+                    "config" => runtime_path("conf.d/openssl.cnf"),
                 ));
                 break;
 
@@ -80,6 +83,7 @@ class GenerateKeys extends Command
                 $res = openssl_pkey_new(array(
                     "curve_name" => $curve_name,
                     "private_key_type" => OPENSSL_KEYTYPE_EC,
+                    "config" => runtime_path("conf.d/openssl.cnf"),
                 ));
 
                 break;

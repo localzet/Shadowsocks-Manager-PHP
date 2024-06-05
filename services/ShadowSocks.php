@@ -53,7 +53,7 @@ class ShadowSocks
      */
     public function onServerStart(): void
     {
-        shell_exec('systemctl restart ss-manager.service');
+        shell_exec('systemctl restart shadowsocks-manager.service');
 
         // Создание нового UDP-соединения
         $this->shadowsocks = new AsyncUdpConnection($this->address);

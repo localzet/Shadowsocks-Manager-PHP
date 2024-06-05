@@ -425,7 +425,7 @@ $RECYCLE.BIN/
 Session.vim
 Sessionx.vim
 
-/runtime
+#/runtime
 #/support/bootstrap.php
 #/support/helpers.php
 #/master
