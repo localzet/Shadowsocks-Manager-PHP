@@ -38,29 +38,29 @@ class Init extends Command
         $shadowsocks = new InitShadowsocks();
         $input->setArgument('port', $port);
         $input->setArgument('method', $method);
-        $shadowsocks->run($input, $output);
+        $shadowsocks->execute($input, $output);
 
         $manager = new InitManager();
         $input->setArgument('port', $port + 1);
         $input->setArgument('method', $method);
-        $manager->run($input, $output);
+        $manager->execute($input, $output);
 
 
         // Реконфигурация ядра
         $sysctl = new InitSysctl();
-        $sysctl->run($input, $output);
+        $sysctl->execute($input, $output);
 
 
         // Генерация ключей
         $keysEC = new GenerateKeys();
         $input->setArgument('algorithm', 'ec');
         $input->setArgument('curve_name', 'sect571k1');
-        $keysEC->run($input, $output);
+        $keysEC->execute($input, $output);
 
         $keysRSA = new GenerateKeys();
         $input->setArgument('algorithm', 'rsa');
         $input->setArgument('private_key_bits', 4096);
-        $keysRSA->run($input, $output);
+        $keysRSA->execute($input, $output);
 
 
         $env = new GenerateEnv();
@@ -68,7 +68,7 @@ class Init extends Command
         $input->setArgument('port_manager_api', $port + 2);
         $input->setArgument('key_public', $keysEC->getPublicKeyPath());
         $input->setArgument('key_private', $keysRSA->getPrivateKeyPath());
-        $env->run($input, $output);
+        $env->execute($input, $output);
 
         $output->writeln('Все компоненты успешно инициализированы');
         return self::SUCCESS;
