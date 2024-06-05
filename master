@@ -1,4 +1,4 @@
-#!/usr/bin/env php
+#!./php-8.3 -d phar.readonly=0
 <?php declare(strict_types=1);
 
 /**
