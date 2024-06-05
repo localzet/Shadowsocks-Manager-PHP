@@ -30,5 +30,36 @@ return [
 
     'build' => [
         'input_dir' => $base_path,
+        'output_dir' => $base_path . DIRECTORY_SEPARATOR . 'build',
+
+        'exclude_pattern' => '#^(?!.*(composer.json|/.github/|/.idea/|/.git/|/.setting/|/runtime/|/vendor-bin/|/build/))(.*)$#',
+        'exclude_files' => [
+            '.env',
+            '.env.example',
+            '.gitattributes',
+            '.gitignore',
+            'CODE_OF_CONDUCT.md',
+            'CODE_OF_CONDUCT_ru.md',
+            'composer.json',
+            'composer.lock',
+            'composer.phar',
+            'CONTRIBUTING.md',
+            'CONTRIBUTING_ru.md',
+            'LICENSE',
+            'php-8.3',
+            'README.md',
+            'ssmgr.phar',
+            'ssmgr',
+        ],
+
+        'phar_alias' => 'ssmgr',
+        'phar_filename' => 'ssmgr.phar',
+        'phar_stub' => 'master',
+
+        // Для бинарной сборки:
+        'php_version' => 8.3,
+        'custom_ini' => 'memory_limit = 512M',
+
+        'bin_filename' => 'ssmgr',
     ],
 ];
