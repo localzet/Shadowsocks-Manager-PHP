@@ -4,6 +4,7 @@ namespace app\command;
 
 use localzet\Console\Commands\Command;
 use Symfony\Component\Console\Exception\ExceptionInterface;
+use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -33,44 +34,31 @@ class Init extends Command
         $port = (int)$input->getArgument('port');
         $method = $input->getArgument('method');
 
-
         // Инициализация служб
-        $shadowsocks = new InitShadowsocks();
-        $input->setArgument('port', $port);
-        $input->setArgument('method', $method);
-        $shadowsocks->execute($input, $output);
-
-        $manager = new InitManager();
-        $input->setArgument('port', $port + 1);
-        $input->setArgument('method', $method);
-        $manager->execute($input, $output);
-
+        $this->runCommand(new InitShadowsocks(), ['port' => $port, 'method' => $method], $output);
+        $this->runCommand(new InitManager(), ['port' => $port + 1, 'method' => $method], $output);
 
         // Реконфигурация ядра
-        $sysctl = new InitSysctl();
-        $sysctl->execute($input, $output);
-
+        $this->runCommand(new InitSysctl(), [], $output);
 
         // Генерация ключей
-        $keysEC = new GenerateKeys();
-        $input->setArgument('algorithm', 'ec');
-        $input->setArgument('curve_name', 'sect571k1');
-        $keysEC->execute($input, $output);
+        $keysEC = $this->runCommand(new GenerateKeys(), ['algorithm' => 'ec', 'curve_name' => 'sect571k1'], $output);
+        $keysRSA = $this->runCommand(new GenerateKeys(), ['algorithm' => 'rsa', 'private_key_bits' => 4096], $output);
 
-        $keysRSA = new GenerateKeys();
-        $input->setArgument('algorithm', 'rsa');
-        $input->setArgument('private_key_bits', 4096);
-        $keysRSA->execute($input, $output);
-
-
-        $env = new GenerateEnv();
-        $input->setArgument('port_manager', $port + 1);
-        $input->setArgument('port_manager_api', $port + 2);
-        $input->setArgument('key_public', $keysEC->getPublicKeyPath());
-        $input->setArgument('key_private', $keysRSA->getPrivateKeyPath());
-        $env->execute($input, $output);
+        $this->runCommand(new GenerateEnv(), [
+            'port_manager' => $port + 1,
+            'port_manager_api' => $port + 2,
+            'key_public' => $keysEC->getPublicKeyPath(),
+            'key_private' => $keysRSA->getPrivateKeyPath(),
+        ], $output);
 
         $output->writeln('Все компоненты успешно инициализированы');
         return self::SUCCESS;
+    }
+
+    private function runCommand($command, array $arguments, OutputInterface $output)
+    {
+        $command->run(new ArrayInput($arguments), $output);
+        return $command;
     }
 }
