@@ -87,7 +87,7 @@ class GenerateKeys extends Command
         }
 
         if (!$res) {
-            $output->writeln("Не удалось создать ключи");
+            $output->writeln("Не удалось создать ключи: ".openssl_error_string());
             return self::FAILURE;
         }
 

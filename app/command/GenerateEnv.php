@@ -14,8 +14,8 @@ class GenerateEnv extends Command
 
     protected function configure()
     {
-        $this->addArgument('port_manager', InputArgument::OPTIONAL, 'Порт внутреннего адреса', 6000);
-        $this->addArgument('port_manager_api', InputArgument::OPTIONAL, 'Порт внутреннего адреса', 6001);
+        $this->addArgument('port_manager', InputArgument::OPTIONAL, 'Порт внутреннего адреса', 6001);
+        $this->addArgument('port_manager_api', InputArgument::OPTIONAL, 'Порт внутреннего адреса', 6002);
         $this->addArgument('key_public', InputArgument::OPTIONAL, 'Путь до публичного ключа ECDSA', 'keys/ec.crt');
         $this->addArgument('key_private', InputArgument::OPTIONAL, 'Путь до приватного ключа RSA', 'keys/rsa.key');
     }
