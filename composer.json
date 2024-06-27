@@ -1,31 +1,27 @@
 {
-  "name": "triangle/web",
-  "description": "Triangle Web - High performance MVC framework",
+  "name": "localzet/ssmgr",
+  "description": "SSManager-S - это мощный и гибкий инструмент для управления серверами, построенный на базе Triangle-org/Web и работающий на базе localzet/server. Он предоставляет удобный и безопасный доступ к API с использованием токенов localzet/lwt, обеспечивая высокую производительность и надежность.\n\n",
   "type": "project",
   "keywords": [
-    "Triangle"
+    "Triangle", "ShadowSocks", "localzet"
   ],
-  "license": "MIT",
+  "license": "AGPL-3.0-or-later",
   "authors": [
     {
       "role": "Developer",
       "name": "Ivan Zorin",
       "email": "creator@localzet.com",
       "homepage": "https://github.com/localzet"
-    },
-    {
-      "role": "Community",
-      "name": "Localzet Group",
-      "email": "community@localzet.com",
-      "homepage": "https://www.localzet.com"
     }
   ],
   "support": {
     "email": "support@localzet.com",
-    "source": "https://github.com/Triangle-org/Web"
+    "source": "https://github.com/localzet/SSManager-S"
   },
   "require": {
-    "php": "^8.2",
+    "php": "^8.3",
+    "ext-openssl": "*",
+    "localzet/lwt": "^1.2",
     "triangle/engine": "^5.5",
     "illuminate/database": "^11.5",
     "illuminate/pagination": "^11.5",
@@ -33,9 +29,7 @@
     "symfony/var-dumper": "^7.0",
     "predis/predis": "^2.2",
     "illuminate/redis": "^11.6",
-    "symfony/cache": "^7.0",
-    "ext-openssl": "*",
-    "localzet/lwt": "^1.2"
+    "symfony/cache": "^7.0"
   },
   "suggest": {
     "ext-simplexml": "For XML Support",

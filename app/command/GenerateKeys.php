@@ -456,6 +456,8 @@ CONF;
         if (file_put_contents("$path/openssl.cnf", $openssl_cnf) === false) {
             $output->writeln("Не удалось записать openssl.cnf");
             return self::FAILURE;
+        } else {
+            $output->writeln("openssl.cnf записан в $path/openssl.cnf");
         }
 
         switch ($algorithm) {
@@ -492,7 +494,6 @@ CONF;
                 ));
 
                 break;
-
         }
 
         if (!$res) {
@@ -500,8 +501,15 @@ CONF;
             return self::FAILURE;
         }
 
-        openssl_pkey_export($res, $private);
+        openssl_pkey_export($res, $private, null, ["config" => runtime_path("keys/openssl.cnf")]);
+        if (!$private) {
+            $output->writeln("Некорректный приватный ключ: ".openssl_error_string());
+        }
+
         $public = openssl_pkey_get_details($res)["key"];
+        if (!$public) {
+            $output->writeln("Некорректный публичный ключ: ".openssl_error_string());
+        }
 
         do {
             $filename = sprintf("$algorithm-%04x%04x%04x", mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff));
